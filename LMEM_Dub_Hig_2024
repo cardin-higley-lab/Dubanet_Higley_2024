@@ -1,6 +1,6 @@
 % Linear Mixed Effect Model
 % Olivier Dubanet 03/2024
-% LMEM compare all group to the 1st one, for multiple comparison this
+% LMEM compare all groups to the 1st one, this
 % script loop trought all groups to perform multicomparison
 
 %% ------------Each variables as to be row
@@ -9,12 +9,12 @@
 names = {'gp1'; 'gp2'; 'gp3'};
 % Sequences of comparison in cells
 seq = {[1 2 3],[2 1 3]};
-% Nested group for randoon factor = animals
+% Nested group for random factor = animals
 Nested_{1} = Nestgroup_1; Nested_{2} = Nestgroup_2; Nested_{3} = Nestgroup_3; 
 % Data for each groups/factor
 Dat_{1} = datagp1; Dat_{2} = datagp2; Dat_{3} = Alldatagp2;  
 
-%% ------------compute loop for each sequences
+%% ------------Compute loop for each sequences
 SumStat = {};
 for i = 1:length(seq)
     compare = seq{i};
@@ -30,7 +30,7 @@ for i = 1:length(seq)
     tmp_tbl = dataset2table(mdl.Coefficients);
     
     % Bonferroni correction if needed
-    tmp_tbl.pValue = tmp_tbl.pValue/length(compare);
+    tmp_tbl.pValue = tmp_tbl.pValue/(length(compare)-1);
     
     % replace with names
     tmp_tbl.Name(2:end) = names(compare(2:end));
